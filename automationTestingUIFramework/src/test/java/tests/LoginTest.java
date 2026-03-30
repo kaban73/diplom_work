@@ -1,12 +1,16 @@
 package tests;
 
 import core.BaseTest;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.InventoryPage;
 import pages.LoginPage;
 
+
+@Epic("Authentication")
+@Feature("Login")
 public class LoginTest extends BaseTest {
 
     private LoginPage loginPage;
@@ -19,6 +23,9 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
+    @Story("Successful login")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Проверка успешной авторизации с валидными данными")
     public void testSuccessfulLogin() {
         loginPage.
                 login(
@@ -32,6 +39,9 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
+    @Story("Login with invalid password")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Попытка входа с неверным паролем")
     public void testLoginWithInvalidPassword() {
         loginPage
                 .login(
@@ -46,6 +56,9 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
+    @Story("Login with invalid username")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Попытка входа с неверным логином")
     public void testLoginWithInvalidUsername() {
         loginPage.login(
                 "wrong_user",
@@ -59,6 +72,9 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
+    @Story("Login with empty fields")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Попытка входа с пустыми полями")
     public void testLoginWithEmptyFields() {
         loginPage.clickLogin();
         Assert.assertTrue(
@@ -69,6 +85,9 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
+    @Story("Error message validation")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Проверка точного текста ошибки")
     public void testErrorMessageText() {
         loginPage
                 .login(
@@ -82,6 +101,9 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
+    @Story("Locked user login")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Попытка входа заблокированного пользователя")
     public void testLoginWithLockedUser() {
         loginPage
                 .login(
