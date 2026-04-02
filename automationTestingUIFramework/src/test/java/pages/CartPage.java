@@ -20,6 +20,9 @@ public class CartPage extends BasePage {
     @FindBy(css = ".cart_button")
     private List<WebElement> removeButtons;
 
+    @FindBy(id = "checkout")
+    private WebElement checkoutButton;
+
     // ======================
     // BASIC
     // ======================
@@ -41,6 +44,11 @@ public class CartPage extends BasePage {
     @Step("Удалить первый товар из корзины")
     public void removeFirstProduct() {
         removeButtons.get(0).click();
+    }
+
+    @Step("Нажать кнопку Checkout")
+    public void clickCheckout() {
+        checkoutButton.click();
     }
 }
 
