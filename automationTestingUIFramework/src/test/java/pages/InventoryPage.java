@@ -32,6 +32,15 @@ public class InventoryPage extends BasePage {
     @FindBy(className = "product_sort_container")
     private WebElement sortDropdown;
 
+    @FindBy(css = ".btn_inventory")
+    private List<WebElement> addToCartButtons;
+
+    @FindBy(className = "shopping_cart_badge")
+    private WebElement cartBadge;
+
+    @FindBy(className = "shopping_cart_link")
+    private WebElement cartIcon;
+
     // ======================
     // BASIC CHECKS
     // ======================
@@ -117,6 +126,36 @@ public class InventoryPage extends BasePage {
     public boolean isNameSortedDesc() {
         List<String> names = getProductTitles();
         return isSortedDesc(names);
+    }
+
+    // ======================
+    // CART ACTIONS
+    // ======================
+
+    @Step("Добавить первый товар в корзину")
+    public void addFirstProductToCart() {
+        addToCartButtons.get(0).click();
+    }
+
+    @Step("Добавить {count} товаров в корзину")
+    public void addMultipleProducts(int count) {
+        for (int i = 0; i < count; i++) {
+            addToCartButtons.get(i).click();
+        }
+    }
+
+    @Step("Получить значение счетчика корзины")
+    public int getCartCount() {
+        try {
+            return Integer.parseInt(cartBadge.getText());
+        } catch (Exception e) {
+            return 0; // если бейджа нет — корзина пустая
+        }
+    }
+
+    @Step("Открыть корзину")
+    public void openCart() {
+        cartIcon.click();
     }
 
     // ======================
