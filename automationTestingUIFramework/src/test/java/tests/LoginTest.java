@@ -46,12 +46,12 @@ public class LoginTest extends BaseTest {
         loginPage
                 .login(
                         "standard_user",
-                        "wrong_password"
+                        ""
                 );
         Assert.assertTrue(
                 loginPage
                         .getErrorMessage()
-                        .contains("Username and password do not match")
+                        .contains("Epic sadface: Password is required")
         );
     }
 

@@ -153,7 +153,7 @@ public class CheckoutTest extends BaseTest {
 
         Assert.assertEquals(
                 checkoutCompletePage.getSuccessMessage(),
-                "THANK YOU FOR YOUR ORDER"
+                "Thank you for your order!"
         );
 
         Assert.assertTrue(
