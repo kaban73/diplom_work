@@ -16,16 +16,18 @@ import java.time.Duration;
 
 public class DriverFactory {
 
-    private static WebDriver driver;
+    private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
 
     public static WebDriver getDriver() {
 
-        if (driver == null) {
+        if (driverThreadLocal.get() == null) {
 
             String browser = ConfigReader.getProperty("browser");
             String execution = ConfigReader.getProperty("execution");
 
             try {
+
+                WebDriver driver;
 
                 if (execution.equalsIgnoreCase("remote")) {
 
@@ -62,6 +64,8 @@ public class DriverFactory {
                             WebDriverManager.firefoxdriver().setup();
                             driver = new FirefoxDriver();
                             break;
+
+                        default: throw new RuntimeException("Unsupported browser");
                     }
                 }
 
@@ -72,18 +76,20 @@ public class DriverFactory {
                         )
                 );
 
+                driverThreadLocal.set(driver);
+
             } catch (Exception e) {
                 throw new RuntimeException("Failed to create driver", e);
             }
         }
 
-        return driver;
+        return driverThreadLocal.get();
     }
 
     public static void quitDriver() {
-        if(driver != null) {
-            driver.quit();
-            driver = null;
+        if(driverThreadLocal.get() != null) {
+            driverThreadLocal.get().quit();
+            driverThreadLocal.remove();
         }
     }
 
