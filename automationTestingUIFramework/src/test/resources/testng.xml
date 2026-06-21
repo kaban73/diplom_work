@@ -1,0 +1,16 @@
+<suite name="Suite" parallel="methods" thread-count="4">
+
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+    </listeners>
+
+    <test name="All Tests" parallel="classes">
+        <classes>
+            <class name="tests.LoginTest"/>
+            <class name="tests.ProductsTest"/>
+            <class name="tests.CartTest"/>
+            <class name="tests.CheckoutTest"/>
+        </classes>
+    </test>
+
+</suite>
